@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Good Luck Anzhi</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* Typography */
+        .font-chinese { font-family: 'Ma Shan Zheng', cursive; }
+        .font-serif-sc { font-family: 'Noto Serif SC', serif; }
+        .font-english { font-family: 'Playfair Display', serif; }
+
+        /* Custom Colors */
+        .bg-imperial-red { background-color: #4a0404; }
+        .text-gold { color: #ffd700; }
+        .border-gold { border-color: #ffd700; }
+        
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 10px #ffd700, 0 0 20px #ffed4a; }
+            50% { box-shadow: 0 0 20px #ffd700, 0 0 30px #ffed4a; }
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        .animate-shake { animation: shake 0.5s; }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-glow { animation: glow 2s infinite alternate; }
+
+        /* Card Flip Logic */
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+
+        /* Transitions */
+        .fade-in { animation: fadeIn 1s forwards; }
+        .fade-out { animation: fadeOut 1s forwards; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+
+        /* Traditional Pattern Overlay */
+        .pattern-bg {
+            background-color: #290808;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%235e1212' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="pattern-bg text-stone-100 overflow-hidden h-screen w-full relative select-none">
+
+    <!-- Audio -->
+    <audio id="bgMusic" loop>
+        <!-- A traditional calming Chinese-style track -->
+        <source src="https://pixabay.com/music/download/music-116327.mp3?filename=chinese-new-year-116327.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- ================= SCENE 0: TAP TO START (Audio Fix) ================= -->
+    <div id="start-screen" class="fixed inset-0 z-50 bg-stone-950 flex flex-col items-center justify-center p-8 text-center">
+        <div class="border-2 border-yellow-700 p-2 rounded-full mb-6 animate-pulse">
+            <div class="border border-yellow-500 rounded-full p-6 bg-red-900/50">
+                <i data-lucide="sparkles" class="w-8 h-8 text-yellow-400"></i>
+            </div>
+        </div>
+        <h1 class="text-3xl font-english text-yellow-100 mb-2">For Wang Anzhi</h1>
+        <p class="text-stone-400 mb-8 font-serif-sc">A journey awaits.</p>
+        <button onclick="startExperience()" class="px-8 py-3 bg-red-700 text-yellow-100 rounded-lg border border-yellow-600 font-serif-sc tracking-widest hover:bg-red-600 transition-all">
+            ENTER
+        </button>
+    </div>
+
+    <!-- ================= SCENE 1: THE JOURNEY (Map) ================= -->
+    <div id="scene-journey" class="fixed inset-0 z-40 bg-stone-900 flex flex-col items-center justify-center hidden">
+        <div class="relative w-full max-w-md h-64">
+            <!-- India -->
+            <div class="absolute left-10 bottom-10 flex flex-col items-center">
+                <div class="w-3 h-3 bg-orange-500 rounded-full animate-ping absolute"></div>
+                <div class="w-3 h-3 bg-orange-500 rounded-full relative z-10"></div>
+                <span class="mt-2 text-stone-400 text-xs tracking-widest">INDIA</span>
+            </div>
+
+            <!-- Xi'an -->
+            <div class="absolute right-10 top-10 flex flex-col items-center">
+                <div class="w-4 h-4 bg-red-600 rounded-full animate-ping absolute delay-1000"></div>
+                <div class="w-4 h-4 bg-red-600 rounded-full relative z-10 shadow-[0_0_15px_rgba(220,38,38,1)]"></div>
+                <span class="mt-2 text-red-400 text-sm font-serif-sc font-bold tracking-widest">XI'AN</span>
+            </div>
+
+            <!-- Path SVG -->
+            <svg class="absolute inset-0 w-full h-full pointer-events-none">
+                <path id="flight-path" d="M 50 200 Q 150 200, 320 50" stroke="url(#lineGradient)" stroke-width="2" fill="none" stroke-dasharray="1000" stroke-dashoffset="1000" />
+                <defs>
+                    <linearGradient id="lineGradient">
+                        <stop offset="0%" stop-color="#f97316" />
+                        <stop offset="100%" stop-color="#dc2626" />
+                    </linearGradient>
+                </defs>
+            </svg>
+            
+            <div id="plane" class="absolute transition-all duration-[3000ms] ease-in-out" style="left: 50px; top: 200px; transform: translate(-50%, -50%); opacity: 0;">
+                <i data-lucide="send" class="w-6 h-6 text-yellow-200 rotate-[-45deg]"></i>
+            </div>
+        </div>
+        <p id="journey-text" class="text-stone-400 font-serif-sc mt-8 animate-pulse">Establishing Connection...</p>
+    </div>
+
+    <!-- ================= SCENE 2: THE GATES OF WISDOM (Memory Game) ================= -->
+    <div id="scene-game" class="fixed inset-0 z-30 bg-imperial-red flex flex-col items-center justify-center p-4 hidden">
+        
+        <!-- Decoration: Pagoda Roof Silhouette -->
+        <div class="absolute top-10 opacity-30 w-64 text-yellow-900">
+             <svg viewBox="0 0 100 40" fill="currentColor">
+                 <path d="M50 0 L10 20 L0 30 L100 30 L90 20 Z" />
+                 <path d="M20 15 L20 0 L80 0 L80 15" fill="none" stroke="currentColor" stroke-width="2"/>
+             </svg>
+        </div>
+
+        <div class="z-10 text-center mb-6">
+            <h2 class="text-3xl font-chinese text-yellow-400 mb-1">智慧之门</h2>
+            <p class="text-yellow-100/80 font-english text-sm">The Gates of Wisdom</p>
+            <p class="text-stone-300 text-xs mt-2 max-w-xs mx-auto">Match the pairs to unlock the gate to success.</p>
+        </div>
+
+        <!-- Game Grid -->
+        <div class="grid grid-cols-3 gap-3 z-10 w-full max-w-[320px]" id="game-grid">
+            <!-- Cards injected by JS -->
+        </div>
+
+        <div id="game-status" class="mt-6 h-6 text-yellow-300 font-serif-sc text-sm"></div>
+
+        <!-- Skip Button (Appears after delay) -->
+        <button id="skip-btn" onclick="finishGame()" class="mt-8 text-stone-500 text-xs underline opacity-0 transition-opacity">
+            ( The spirits are busy, skip ahead )
+        </button>
+    </div>
+
+    <!-- ================= SCENE 3: TEMPLE OF FORTUNE ================= -->
+    <div id="scene-fortune" class="fixed inset-0 z-20 bg-stone-900 flex flex-col items-center justify-center p-6 hidden">
+        
+        <h2 class="text-3xl font-chinese text-red-500 mb-2">求签</h2>
+        <p class="text-stone-400 font-serif-sc mb-10 text-center">Shake the cylinder for your Exam Forecast</p>
+
+        <!-- Cylinder Container -->
+        <div id="chim-container" class="relative w-32 h-48 cursor-pointer group" onclick="shakeCylinder()">
+            <!-- Sticks inside -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-full flex justify-center items-end overflow-hidden pb-4">
+                 <div id="stick-group" class="transition-transform duration-300 translate-y-4">
+                     <div class="w-2 h-32 bg-yellow-100 absolute bottom-0 left-2 rotate-[-5deg] border border-red-900"></div>
+                     <div class="w-2 h-36 bg-yellow-100 absolute bottom-0 left-6 rotate-[2deg] border border-red-900"></div>
+                     <div class="w-2 h-30 bg-yellow-100 absolute bottom-0 left-10 rotate-[-2deg] border border-red-900"></div>
+                 </div>
+            </div>
+            <!-- Cylinder Body -->
+            <div class="absolute bottom-0 w-full h-32 bg-gradient-to-r from-red-800 to-red-600 rounded-lg border-2 border-yellow-600 shadow-2xl flex items-center justify-center z-10">
+                <div class="w-16 h-16 border-2 border-yellow-600/50 rounded-full flex items-center justify-center">
+                    <span class="font-chinese text-2xl text-yellow-400">运</span>
+                </div>
+            </div>
+        </div>
+
+        <p class="mt-8 text-sm text-stone-500 animate-bounce">Tap to Shake</p>
+
+        <!-- Result Card (Hidden initially) -->
+        <div id="fortune-result" class="absolute inset-0 z-50 bg-stone-900/95 flex items-center justify-center hidden opacity-0 transition-opacity duration-500">
+            <div class="bg-red-900 p-1 border-2 border-yellow-600 max-w-xs w-full mx-8 rounded-lg">
+                <div class="bg-stone-100 text-stone-900 p-6 text-center rounded relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-red-600"></div>
+                    <div class="absolute bottom-0 left-0 w-full h-2 bg-red-600"></div>
+                    
+                    <h3 class="text-2xl font-chinese text-red-700 mb-2">上上签</h3>
+                    <p class="font-bold font-serif-sc text-lg mb-4">Supreme Luck</p>
+                    <div class="w-8 h-0.5 bg-red-200 mx-auto mb-4"></div>
+                    <p id="fortune-text" class="font-english italic text-stone-700 leading-relaxed">
+                        "Your efforts have built a mountain. The view from the top is guaranteed."
+                    </p>
+                    <button onclick="goToFinal()" class="mt-6 px-6 py-2 bg-red-700 text-white rounded-full text-sm hover:bg-red-800 transition-colors">
+                        Receive Blessing
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= SCENE 4: FINAL MESSAGE ================= -->
+    <div id="scene-final" class="fixed inset-0 z-10 flex flex-col items-center justify-center p-6 opacity-0 transition-opacity duration-1000">
+        
+        <!-- Lanterns -->
+        <div class="absolute top-0 w-full h-full overflow-hidden pointer-events-none">
+            <div id="lanterns-container"></div>
+        </div>
+
+        <!-- Message Card -->
+        <div class="bg-stone-900/80 backdrop-blur-md border border-red-500/30 p-8 rounded-2xl max-w-md w-full text-center relative shadow-[0_0_50px_rgba(220,38,38,0.3)]">
+            
+            <!-- Avatar/Icon -->
+            <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-stone-900 rounded-full border-4 border-yellow-600 flex items-center justify-center shadow-lg">
+                <i data-lucide="crown" class="w-10 h-10 text-yellow-500"></i>
+            </div>
+
+            <h1 class="mt-8 text-4xl font-english text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-orange-200 to-red-200 mb-2">Anzhi</h1>
+            <p class="text-stone-400 font-serif-sc text-sm mb-6 uppercase tracking-widest">Xi'an, China</p>
+
+            <div class="space-y-4 text-stone-200 font-serif-sc leading-relaxed">
+                <p>
+                    The walls of Xi'an have stood for centuries, creating a legacy of strength.
+                </p>
+                <p>
+                    Tomorrow, you carry that same strength. I know how hard you've worked. The exam is small; your potential is infinite.
+                </p>
+                <p class="text-yellow-400 font-bold text-lg mt-4">
+                    加油 (Jiāyóu)!
+                </p>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-stone-700/50 flex justify-center space-x-6">
+                <button onclick="rainConfetti()" class="flex flex-col items-center gap-1 group">
+                    <div class="p-3 bg-red-800/50 rounded-full group-hover:bg-red-700 transition-colors">
+                        <i data-lucide="party-popper" class="w-5 h-5 text-yellow-300"></i>
+                    </div>
+                    <span class="text-[10px] text-stone-400">Celebrate</span>
+                </button>
+                <button onclick="window.location.reload()" class="flex flex-col items-center gap-1 group">
+                    <div class="p-3 bg-stone-800/50 rounded-full group-hover:bg-stone-700 transition-colors">
+                        <i data-lucide="rotate-ccw" class="w-5 h-5 text-stone-300"></i>
+                    </div>
+                    <span class="text-[10px] text-stone-400">Replay</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-4 text-stone-600 text-xs font-serif-sc">
+            Sending luck from India
+        </div>
+    </div>
+
+    <!-- Canvas for effects -->
+    <canvas id="canvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
+
+    <script>
+        // Init Icons
+        lucide.createIcons();
+
+        // --- State Management ---
+        const scenes = {
+            start: document.getElementById('start-screen'),
+            journey: document.getElementById('scene-journey'),
+            game: document.getElementById('scene-game'),
+            fortune: document.getElementById('scene-fortune'),
+            final: document.getElementById('scene-final')
+        };
+        const audio = document.getElementById('bgMusic');
+
+        // --- Scene 1: Start ---
+        function startExperience() {
+            scenes.start.style.display = 'none';
+            scenes.journey.style.display = 'flex';
+            
+            // Audio Play
+            audio.volume = 0.4;
+            audio.play().catch(e => console.log("Audio prevented"));
+
+            // Animate Journey
+            setTimeout(() => {
+                // Animate SVG line
+                const path = document.getElementById('flight-path');
+                path.style.transition = 'stroke-dashoffset 3s linear';
+                path.style.strokeDashoffset = '0';
+
+                // Animate Plane
+                const plane = document.getElementById('plane');
+                plane.style.opacity = '1';
+                plane.style.left = '320px'; // Matching Q curve end x
+                plane.style.top = '50px';   // Matching Q curve end y
+            }, 500);
+
+            const text = document.getElementById('journey-text');
+            setTimeout(() => { text.innerText = "Leaving India..."; }, 1000);
+            setTimeout(() => { text.innerText = "Arriving in Xi'an..."; }, 2500);
+
+            setTimeout(() => {
+                scenes.journey.classList.add('fade-out');
+                setTimeout(() => {
+                    scenes.journey.style.display = 'none';
+                    initGame();
+                }, 1000);
+            }, 4500);
+        }
+
+        // --- Scene 2: Game (Memory Match) ---
+        function initGame() {
+            scenes.game.style.display = 'flex';
+            scenes.game.classList.add('fade-in');
+
+            // Skip button timer
+            setTimeout(() => {
+                const btn = document.getElementById('skip-btn');
+                btn.style.opacity = '1';
+            }, 10000); // 10s delay
+
+            const grid = document.getElementById('game-grid');
+            const icons = ['brain', 'pen-tool', 'trophy', 'sun', 'star', 'zap']; // 6 types
+            let cards = [...icons, ...icons]; // 12 cards total
+            
+            // Shuffle
+            cards.sort(() => 0.5 - Math.random());
+
+            let selectedCards = [];
+            let matchedCount = 0;
+
+            cards.forEach((icon, index) => {
+                const card = document.createElement('div');
+                card.className = "relative h-20 w-full cursor-pointer perspective-1000 group";
+                card.innerHTML = `
+                    <div class="card-inner w-full h-full relative transform-style-3d transition-transform duration-500 bg-red-900 border border-yellow-600/30 rounded-lg shadow-lg" data-icon="${icon}" data-index="${index}">
+                        <div class="absolute w-full h-full backface-hidden bg-red-900 flex items-center justify-center rounded-lg">
+                            <i data-lucide="flower" class="text-yellow-800 w-6 h-6 opacity-50"></i>
+                        </div>
+                        <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-stone-100 flex items-center justify-center rounded-lg border-2 border-yellow-500">
+                            <i data-lucide="${icon}" class="text-red-700 w-8 h-8"></i>
+                        </div>
+                    </div>
+                `;
+                
+                card.onclick = () => {
+                    const inner = card.querySelector('.card-inner');
+                    if (inner.classList.contains('rotate-y-180') || selectedCards.length >= 2) return;
+
+                    // Flip
+                    inner.classList.add('rotate-y-180');
+                    selectedCards.push({ element: inner, icon: icon });
+
+                    if (selectedCards.length === 2) {
+                        checkMatch();
+                    }
+                };
+                grid.appendChild(card);
+            });
+            lucide.createIcons();
+
+            function checkMatch() {
+                const [c1, c2] = selectedCards;
+                if (c1.icon === c2.icon) {
+                    matchedCount++;
+                    selectedCards = [];
+                    // Visual feedback
+                    document.getElementById('game-status').innerText = getRandomPraise();
+                    if (matchedCount === 6) {
+                        setTimeout(finishGame, 800);
+                    }
+                } else {
+                    setTimeout(() => {
+                        c1.element.classList.remove('rotate-y-180');
+                        c2.element.classList.remove('rotate-y-180');
+                        selectedCards = [];
+                    }, 1000);
+                }
+            }
+        }
+
+        function getRandomPraise() {
+            const praises = ["Excellent!", "Keep going!", "Sharp Mind!", "Brilliant!"];
+            return praises[Math.floor(Math.random() * praises.length)];
+        }
+
+        function finishGame() {
+            scenes.game.classList.add('fade-out');
+            setTimeout(() => {
+                scenes.game.style.display = 'none';
+                initFortune();
+            }, 1000);
+        }
+
+        // --- Scene 3: Fortune ---
+        function initFortune() {
+            scenes.fortune.style.display = 'flex';
+            scenes.fortune.classList.add('fade-in');
+        }
+
+        let isShaking = false;
+        function shakeCylinder() {
+            if(isShaking) return;
+            isShaking = true;
+            
+            const container = document.getElementById('chim-container');
+            container.classList.add('animate-shake');
+
+            // Play sound effect logic here if allowed, otherwise visual only
+            
+            setTimeout(() => {
+                container.classList.remove('animate-shake');
+                showFortuneResult();
+            }, 1500);
+        }
+
+        function showFortuneResult() {
+            const overlay = document.getElementById('fortune-result');
+            overlay.classList.remove('hidden');
+            // Force reflow
+            void overlay.offsetWidth;
+            overlay.style.opacity = '1';
+
+            // Custom texts
+            const fortunes = [
+                "Your hard work is the key that opens every door.",
+                "Calmness in the heart brings clarity to the mind.",
+                "The stars over Xi'an shine bright for you tonight.",
+                "Victory is prepared for those who persist."
+            ];
+            document.getElementById('fortune-text').innerText = `"${fortunes[Math.floor(Math.random() * fortunes.length)]}"`;
+        }
+
+        function goToFinal() {
+            const f = document.getElementById('scene-fortune');
+            f.classList.add('fade-out');
+            setTimeout(() => {
+                f.style.display = 'none';
+                initFinal();
+            }, 1000);
+        }
+
+        // --- Scene 4: Final ---
+        function initFinal() {
+            scenes.final.style.opacity = '1';
+            createLanterns();
+            rainConfetti(); // Immediate celebration
+        }
+
+        // --- Visual Effects ---
+        function createLanterns() {
+            const container = document.getElementById('lanterns-container');
+            for(let i=0; i<8; i++) {
+                const l = document.createElement('div');
+                l.className = "absolute text-red-600 opacity-60 animate-float";
+                l.innerHTML = `<i data-lucide="lamp-ceiling" style="width: ${Math.random()*30+30}px; height: auto;"></i>`;
+                l.style.left = Math.random() * 100 + '%';
+                l.style.top = Math.random() * 100 + '%';
+                l.style.animationDelay = Math.random() * 2 + 's';
+                l.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                container.appendChild(l);
+            }
+            lucide.createIcons();
+        }
+
+        // Confetti Canvas
+        function rainConfetti() {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const colors = ['#ffd700', '#dc2626', '#fca5a5', '#fbbf24'];
+
+            for(let i=0; i<100; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    size: Math.random() * 5 + 2,
+                    speed: Math.random() * 3 + 2,
+                    wobble: Math.random() * 10
+                });
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let active = false;
+                
+                particles.forEach(p => {
+                    p.y += p.speed;
+                    p.x += Math.sin(p.wobble) * 0.5;
+                    p.wobble += 0.1;
+
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    if(p.y < canvas.height) active = true;
+                });
+
+                if(active) requestAnimationFrame(animate);
+                else ctx.clearRect(0,0, canvas.width, canvas.height);
+            }
+            animate();
+        }
+
+        // Handle resize for canvas
+        window.addEventListener('resize', () => {
+            const canvas = document.getElementById('canvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+    </script>
+</body>
+</html>
+
